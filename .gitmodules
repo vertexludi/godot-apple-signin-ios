@@ -1,0 +1,4 @@
+[submodule "godot"]
+	path = godot
+	url = https://github.com/godotengine/godot.git
+	branch = 49a5bc7b616bd04689a2c89e89bda41f50241464
