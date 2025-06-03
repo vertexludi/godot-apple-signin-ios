@@ -34,9 +34,8 @@
 void GodotAppleSignIn::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("initiate_signin"), &GodotAppleSignIn::initiate_signin);
 	ClassDB::bind_method(D_METHOD("request_credential_state", "user_id"), &GodotAppleSignIn::request_credential_state);
-	
-	ADD_SIGNAL(MethodInfo("authenticated", PropertyInfo(Variant::DICTIONARY, "data")));
-	ADD_SIGNAL(MethodInfo("auth_failed", PropertyInfo(Variant::STRING, "error")));
+
+	ADD_SIGNAL(MethodInfo("signin_completed", PropertyInfo(Variant::DICTIONARY, "data"), PropertyInfo(Variant::STRING, "error")));
 	ADD_SIGNAL(MethodInfo("state_received", PropertyInfo(Variant::STRING, "state")));
 }
 
@@ -81,11 +80,11 @@ void GodotAppleSignIn::request_credential_state(const String &userId) {
 }
 
 void GodotAppleSignIn::auth_callback(const Dictionary &data) {
-	emit_signal("authenticated", data);
+	emit_signal("signin_completed", data, "");
 }
 
 void GodotAppleSignIn::auth_failed_callback(const String &error) {
-	emit_signal("auth_failed", error);
+	emit_signal("signin_completed", Dictionary(), error);
 }
 
 GodotAppleSignIn::GodotAppleSignIn() {

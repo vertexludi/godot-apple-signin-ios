@@ -2,7 +2,7 @@
 ; See LICENSE file.
 
 [config]
-name="GodotAppleSignIn"
+name="AppleSignIn"
 binary="apple_signin.xcframework"
 
 initialization="register_apple_signin_types"

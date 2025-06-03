@@ -20,7 +20,7 @@ Then you can call methods and connect signals using the custom variable.
 
 **`initiate_signin()`**
 
-Initiate the Sign in with Apple procedure. This will popup a window for the user to perform login with their Apple account. Note that they can customize their name at this point and choose to use a random email instead of their main one.
+Initiate the Sign in with Apple procedure. This will popup a window for the user to perform login with their Apple account. Note that they can customize their name at this point and choose to use a random email instead of their main one. You can catch the result of this call using the `signin_completed` signal.
 
 **`request_credential_state(id: String)`**
 
@@ -30,9 +30,9 @@ This is useful to check if the user you have logged is still signed in, like whe
 
 ### Signals
 
-**`authenticated(data: Dictionary)`**
+**`signin_completed(data: Dictionary, error: String)`**
 
-Emitted if the user has successfully authenticated. The dictionary has information about the user:
+Emitted when the sign in process is completed, whether or not there's any error. If it is successful, the `error` string will be empty and the `data` dictionary will have the following information about the user:
 
 - `id`: The user id as given by Apple.
 - `name`: The user's full name as provided.
@@ -43,9 +43,7 @@ Emitted if the user has successfully authenticated. The dictionary has informati
 
 Note that name and email are provided by the API only when the user does the initial sign up. After that, any sign in will have these fields as empty or `null`. You can get the email from the decode JWT data though.
 
-**`auth_failed(error: String)`**
-
-Emitted if the authentication failed for any reason. The parameter contains one of the values of the [`ASAuthorizationError.Code`](https://developer.apple.com/documentation/authenticationservices/asauthorizationerror-swift.struct/code) enum as a string.
+If there's an error, `data` will be empty and the `error` parameter will contain one of the values of the [`ASAuthorizationError.Code`](https://developer.apple.com/documentation/authenticationservices/asauthorizationerror-swift.struct/code) enum as a string.
 
 **`state_received(state: String)`**
 
